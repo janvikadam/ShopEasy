@@ -1,0 +1,208 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(90deg, #4f8cff 0%, #38e8ac 100%);
+    padding: 0 20px; /* Reduced padding from 40px to 20px */
+    height: 70px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-sizing: border-box; /* Ensures padding doesn't overflow */
+}
+
+.navbar-logo span {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+    letter-spacing: 2px;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 20px; /* Reduced gap from 30px to 20px */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+}
+
+.navbar-links li {
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.navbar-links li:hover {
+    color: #222;
+}
+
+.navbar-actions {
+    display: flex;
+    gap: 10px; /* Reduced gap from 15px to 10px */
+}
+
+.navbar-btn {
+    padding: 8px 16px; /* Reduced horizontal padding */
+    border: none;
+    border-radius: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap; /* Prevents button text from wrapping */
+}
+
+.signup {
+    background: #fff;
+    color: #4f8cff;
+}
+
+.signup:hover {
+    background: #4f8cff;
+    color: #fff;
+}
+
+.login {
+    background: #222;
+    color: #fff;
+}
+
+.login:hover {
+    background: #38e8ac;
+    color: #222;
+}
+/* Search Bar */
+.navbar-search {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 20px;
+    padding: 4px 10px;
+    margin: 0 20px;
+}
+
+.navbar-search input {
+    border: none;
+    outline: none;
+    padding: 6px;
+    font-size: 1rem;
+    border-radius: 20px;
+    flex: 1;
+    min-width: 150px;
+}
+
+.navbar-search button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #4f8cff;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* Profile Icon */
+.navbar-profile {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    transition: color 0.2s;
+}
+
+.navbar-profile:hover {
+    color: #222;
+}
+.navbar-search-wrapper {
+  position: relative;
+}
+
+.navbar-search {
+  display: flex;
+  align-items: center;
+  background: #555454;
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+
+.navbar-search input {
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 6px 8px;
+  width: 220px;
+  font-size: 0.95rem;
+}
+
+.navbar-search button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Suggestions dropdown */
+.search-suggestions {
+  position: absolute;
+  top: 105%;
+  left: 0;
+  right: 0;
+  background: #fffcfc;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  list-style: none;
+  padding: 8px 0;
+  margin: 6px 0 0;
+  max-height: 260px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.search-suggestions li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.search-suggestions li:hover {
+  background: #e8eded;
+}
+
+.suggestion-icon {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+        padding: 10px;
+    }
+    .navbar-links {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+    .navbar-actions {
+        width: 100%;
+        justify-content: flex-start;
+        margin-top: 10px;
+    }
+}
+
+/* Add margin to body to prevent content hiding behind navbar */
+body {
+    margin-top: 70px;
+}
