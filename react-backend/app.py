@@ -8,14 +8,20 @@ app = Flask(__name__)
 CORS(app)
 
 # ================== DATABASE CONNECTION ==================
-client = MongoClient("mongodb://localhost:27017/")  # Local MongoDB (Compass)
-db = client["shopeasy"]
+MONGO_URI = "mongodb+srv://shopeasyuser:StrongPassword123@cluster0.ku6a5az.mongodb.net/"
+
+try:
+    client = MongoClient(MONGO_URI)
+    db = client["shopeasy"]
+    print("✅ MongoDB Atlas connected successfully")
+except Exception as e:
+    print("❌ MongoDB connection error:", e)
 
 users_collection = db["users"]
 products_collection = db["products"]
 cart_collection = db["cart"]
 
-# ================== USER SIGNUP =================
+# ================== USER SIGNUP ==================
 @app.route("/api/signup", methods=["POST"])
 def signup():
     data = request.json
@@ -33,7 +39,7 @@ def signup():
     # Hash password
     hashed_pw = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
 
-    # Insert into DB
+    # Insert user
     users_collection.insert_one({
         "username": username,
         "email": email,
@@ -54,10 +60,10 @@ def login():
         return jsonify({"error": "Email and password are required!"}), 400
 
     user = users_collection.find_one({"email": email})
+
     if not user:
         return jsonify({"error": "User not found!"}), 404
 
-    # Verify password
     if bcrypt.checkpw(password.encode("utf-8"), user["password"]):
         return jsonify({
             "message": "Login successful!",
@@ -71,11 +77,12 @@ def login():
 # ================== PRODUCTS API ==================
 @app.route("/api/products", methods=["GET"])
 def get_products():
-    products = list(products_collection.find({}, {"_id": 0}))  # Don’t send _id
+    products = list(products_collection.find({}, {"_id": 0}))
     return jsonify(products), 200
 
 
 # ================== CART API ==================
+
 # Add to Cart
 @app.route("/api/cart", methods=["POST"])
 def add_to_cart():
@@ -102,13 +109,14 @@ def add_to_cart():
 def get_cart(email):
     cursor = cart_collection.find({"email": email})
     items = []
+
     for doc in cursor:
-        doc["_id"] = str(doc["_id"])  # convert ObjectId to string
         items.append({
-            "_id": doc["_id"],
+            "_id": str(doc["_id"]),
             "email": doc.get("email"),
             "product": doc.get("product")
         })
+
     return jsonify(items), 200
 
 
@@ -117,10 +125,12 @@ def get_cart(email):
 def delete_cart_item(item_id):
     try:
         res = cart_collection.delete_one({"_id": ObjectId(item_id)})
+
         if res.deleted_count == 1:
             return jsonify({"message": "Item removed from cart"}), 200
         else:
             return jsonify({"error": "Item not found"}), 404
+
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
